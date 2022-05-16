@@ -1,6 +1,7 @@
 package com.example.employeeproject.services;
 
-import com.example.employeeproject.Module.Employee;
+import com.example.employeeproject.module.Employee;
+import com.example.employeeproject.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,35 +9,33 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeServices {
+public class EmployeeServices implements IEmployeeInterface{
 
     @Autowired
-    IEmployeeInterface iEmployeeInterface;
+    EmployeeRepository employeeRepository;
 
     public Employee addEmployee(Employee employee) {
         Employee newEmployee = new Employee(employee);
-        iEmployeeInterface.save(newEmployee);
+        employeeRepository.save(newEmployee);
         return newEmployee;
     }
 
     public Optional<Employee> searchById(int id) {
-        return iEmployeeInterface.findById(id);
+        return employeeRepository.findById(id);
     }
 
     public List<Employee> searchAll() {
-        return iEmployeeInterface.findAll();
+        return employeeRepository.findAll();
     }
 
     public Employee editById(int id, Employee employee) {
-        Employee newEmployee = new Employee(id,employee);
-        iEmployeeInterface.save(newEmployee);
-        return newEmployee;
+        return employeeRepository.save(employee);
     }
 
     public String removeById(int id) {
-        Optional<Employee> newEmployee = iEmployeeInterface.findById(id);
+        Optional<Employee> newEmployee = employeeRepository.findById(id);
         if (newEmployee.isPresent()){
-            iEmployeeInterface.delete(newEmployee.get());
+            employeeRepository.delete(newEmployee.get());
             return "Record is deleted with id " +id;
         }
         return "Record not Found";

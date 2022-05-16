@@ -1,7 +1,7 @@
 package com.example.employeeproject.controller;
 
-import com.example.employeeproject.Module.Employee;
-import com.example.employeeproject.services.EmployeeServices;
+import com.example.employeeproject.module.Employee;
+import com.example.employeeproject.services.IEmployeeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,44 +13,39 @@ import java.util.Optional;
 public class EmployeeController {
 
     @Autowired
-    EmployeeServices employeeServices;
+    IEmployeeInterface iEmployeeInterface;
 
     @GetMapping("/hello")
     public String sayHello(){
-        return "Hello Shubham";
+        return "Hello";
     }
-    /*--------------------Post Operation-------------------*/
+
     @PostMapping("/add")
     public Employee addEmployee(@RequestBody Employee employee){
-        Employee newEmployee = employeeServices.addEmployee(employee);
+        Employee newEmployee = iEmployeeInterface.addEmployee(employee);
         return newEmployee;
     }
-    /*--------------------Search by Id---------------------*/
+
     @GetMapping("/search/{id}")
     public Optional<Employee> searchById(@PathVariable int id){
-        Optional<Employee> response = employeeServices.searchById(id);
+        Optional<Employee> response = iEmployeeInterface.searchById(id);
         return response;
     }
 
-    /*----------------------Show all records ------------------*/
     @GetMapping("/show")
     public List<Employee> searchAll(){
-        List<Employee> response = employeeServices.searchAll();
+        List<Employee> response = iEmployeeInterface.searchAll();
         return response;
     }
 
-    /*-----------------------Edit by ID----------------------*/
     @PutMapping("/edit/{id}")
     public Employee editById(@PathVariable int id,@RequestBody Employee employee){
-        Employee response = employeeServices.editById(id,employee);
+        Employee response = iEmployeeInterface.editById(id,employee);
         return response;
     }
-
-    /*-----------------------Delete by Id---------------------*/
 
     @DeleteMapping("/remove/{id}")
     public String removeById(@PathVariable int id) {
-        String response = employeeServices.removeById(id);
-        return response;
+        return iEmployeeInterface.removeById(id);
     }
 }

@@ -1,8 +1,10 @@
-package com.example.employeeproject.Module;
+package com.example.employeeproject.module;
 
+import javax.annotation.processing.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 public class Employee {
@@ -14,9 +16,9 @@ public class Employee {
     String profilePic;
     String gender;
     String department;
-    String salary;
-    String mobileNumber;
-    String startDate;
+    int salary;
+    int mobileNumber;
+    LocalDate startDate;
     String notes;
 
     public Employee(int id, Employee employee) {
@@ -36,11 +38,11 @@ public class Employee {
     }
 
 
-    public String getMobileNumber() {
+    public int getMobileNumber() {
         return mobileNumber;
     }
 
-    public void setMobileNumber(String mobileNumber) {
+    public void setMobileNumber(int mobileNumber) {
         this.mobileNumber = mobileNumber;
     }
 
@@ -52,7 +54,7 @@ public class Employee {
         this.notes = notes;
     }
 
-    public Employee(int id, String fullName, String profilePic, String gender, String department, String salary, String startDate,String mobileNumber,String notes) {
+    public Employee(int id, String fullName, String profilePic, String gender, String department, int salary, LocalDate startDate,int mobileNumber,String notes) {
         this.id = id;
         this.fullName = fullName;
         this.profilePic = profilePic;
@@ -121,19 +123,19 @@ public class Employee {
         this.department = department;
     }
 
-    public String getSalary() {
+    public int getSalary() {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 }
