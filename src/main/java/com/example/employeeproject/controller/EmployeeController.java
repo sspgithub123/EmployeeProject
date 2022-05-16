@@ -1,12 +1,13 @@
 package com.example.employeeproject.controller;
 
+import com.example.employeeproject.dto.EmployeeDTO;
+import com.example.employeeproject.dto.ResponseDTO;
 import com.example.employeeproject.module.Employee;
 import com.example.employeeproject.services.IEmployeeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/employee")
@@ -17,35 +18,38 @@ public class EmployeeController {
 
     @GetMapping("/hello")
     public String sayHello(){
-        return "Hello";
+        return "Hello Sir";
     }
 
     @PostMapping("/add")
-    public Employee addEmployee(@RequestBody Employee employee){
-        Employee newEmployee = iEmployeeInterface.addEmployee(employee);
-        return newEmployee;
+    public ResponseEntity<ResponseDTO> addEmployee(@RequestBody EmployeeDTO employeeDTO){
+        Employee newEmployee = new Employee(employeeDTO);
+        iEmployeeInterface.addEmployee(newEmployee);
+        ResponseDTO responseDTO = new ResponseDTO("Get Call Success", iEmployeeInterface.addEmployee(newEmployee));
+        return new ResponseEntity<>(responseDTO,HttpStatus.CREATED);
     }
 
     @GetMapping("/search/{id}")
-    public Optional<Employee> searchById(@PathVariable int id){
-        Optional<Employee> response = iEmployeeInterface.searchById(id);
-        return response;
+    public ResponseEntity<ResponseDTO> searchById(@PathVariable int id){
+        ResponseDTO responseDTO = new ResponseDTO("Get Call Success", iEmployeeInterface.searchById(id));
+        return new ResponseEntity<>(responseDTO,HttpStatus.CREATED);
     }
 
     @GetMapping("/show")
-    public List<Employee> searchAll(){
-        List<Employee> response = iEmployeeInterface.searchAll();
-        return response;
+    public ResponseEntity<ResponseDTO> searchAll(){
+        ResponseDTO responseDTO = new ResponseDTO("Get Call Success", iEmployeeInterface.searchAll());
+        return new ResponseEntity<>(responseDTO,HttpStatus.OK);
     }
 
     @PutMapping("/edit/{id}")
-    public Employee editById(@PathVariable int id,@RequestBody Employee employee){
-        Employee response = iEmployeeInterface.editById(id,employee);
-        return response;
+    public ResponseEntity<ResponseDTO> editById(@PathVariable int id,@RequestBody EmployeeDTO employeeDTO){
+        ResponseDTO responseDTO = new ResponseDTO("Get Call Success", iEmployeeInterface.editById(id,employeeDTO));
+        return new ResponseEntity<>(responseDTO,HttpStatus.OK);
     }
 
     @DeleteMapping("/remove/{id}")
-    public String removeById(@PathVariable int id) {
-        return iEmployeeInterface.removeById(id);
+    public ResponseEntity<ResponseDTO> removeById(@PathVariable int id) {
+        ResponseDTO responseDTO = new ResponseDTO("Get Call Success", iEmployeeInterface.removeById(id));
+        return new ResponseEntity<>(responseDTO,HttpStatus.OK);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.employeeproject.module;
 
-import javax.annotation.processing.Generated;
+import com.example.employeeproject.dto.EmployeeDTO;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -35,6 +35,18 @@ public class Employee {
 
     public Employee(int id) {
         this.id = id;
+    }
+
+    public Employee(int id, EmployeeDTO employee) {
+        this.id = id;
+        this.fullName = employee.fullName;
+        this.profilePic = employee.profilePic;
+        this.gender = employee.gender;
+        this.department = employee.department;
+        this.mobileNumber = employee.mobileNumber;
+        this.notes = employee.notes;
+        this.salary = employee.salary;
+        this.startDate = employee.startDate;
     }
 
 
@@ -137,5 +149,31 @@ public class Employee {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public Employee(EmployeeDTO employeeDTO) {
+        this.fullName = employeeDTO.fullName;
+        this.profilePic = employeeDTO.profilePic;
+        this.gender = employeeDTO.gender;
+        this.department = employeeDTO.department;
+        this.mobileNumber = employeeDTO.mobileNumber;
+        this.notes = employeeDTO.notes;
+        this.salary = employeeDTO.salary;
+        this.startDate = employeeDTO.startDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", profilePic='" + profilePic + '\'' +
+                ", gender='" + gender + '\'' +
+                ", department='" + department + '\'' +
+                ", salary=" + salary +
+                ", mobileNumber=" + mobileNumber +
+                ", startDate=" + startDate +
+                ", notes='" + notes + '\'' +
+                '}';
     }
 }

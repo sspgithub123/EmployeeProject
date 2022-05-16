@@ -1,5 +1,7 @@
 package com.example.employeeproject.services;
 
+
+import com.example.employeeproject.dto.EmployeeDTO;
 import com.example.employeeproject.module.Employee;
 import com.example.employeeproject.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,13 @@ public class EmployeeServices implements IEmployeeInterface{
         return employeeRepository.findAll();
     }
 
-    public Employee editById(int id, Employee employee) {
-        return employeeRepository.save(employee);
+    public String editById(int id, EmployeeDTO employeeDTO) {
+        if (employeeRepository.findById(id).isPresent()) {
+            Employee newEmployee = new Employee(id, employeeDTO);
+            Employee search = employeeRepository.save(newEmployee);
+            return "Done " + search;
+        }
+        return "No match Found";
     }
 
     public String removeById(int id) {
