@@ -11,7 +11,7 @@ public class Employee {
 
     @Id
     @GeneratedValue
-    int id;
+     int id;
     String fullName;
     String profilePic;
     String gender;

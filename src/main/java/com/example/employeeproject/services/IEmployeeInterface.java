@@ -4,7 +4,6 @@ import com.example.employeeproject.dto.EmployeeDTO;
 import com.example.employeeproject.module.Employee;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface IEmployeeInterface{
@@ -15,7 +14,7 @@ public interface IEmployeeInterface{
 
     List<Employee> searchAll();
 
-    Optional<Employee> searchById(int id);
+    Employee searchById(int id);
 
     Employee addEmployee(Employee employee);
 }

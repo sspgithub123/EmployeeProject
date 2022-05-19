@@ -1,7 +1,7 @@
 package com.example.employeeproject.services;
 
-
 import com.example.employeeproject.dto.EmployeeDTO;
+import com.example.employeeproject.exceptionHandling.EmployeeException;
 import com.example.employeeproject.module.Employee;
 import com.example.employeeproject.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,12 @@ public class EmployeeServices implements IEmployeeInterface{
         return newEmployee;
     }
 
-    public Optional<Employee> searchById(int id) {
-        return employeeRepository.findById(id);
+    public Employee searchById(int id) {
+        if (employeeRepository.findById(id).isPresent()){
+            Employee newEmployee = new Employee(id);
+            return newEmployee;
+        }
+        else throw (new EmployeeException("record not Found"));
     }
 
     public List<Employee> searchAll() {
@@ -36,7 +40,7 @@ public class EmployeeServices implements IEmployeeInterface{
             Employee search = employeeRepository.save(newEmployee);
             return "Done " + search;
         }
-        return "No match Found";
+        else throw (new EmployeeException("Wrong input"));
     }
 
     public String removeById(int id) {
@@ -45,6 +49,6 @@ public class EmployeeServices implements IEmployeeInterface{
             employeeRepository.delete(newEmployee.get());
             return "Record is deleted with id " +id;
         }
-        return "Record not Found";
+        else throw (new EmployeeException("Record not Found"));
     }
 }
