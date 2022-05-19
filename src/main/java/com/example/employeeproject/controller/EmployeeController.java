@@ -27,14 +27,12 @@ public class EmployeeController {
     @PostMapping("/add")
     public ResponseEntity<ResponseDTO> addEmployee(@Valid @RequestBody EmployeeDTO employeeDTO){
         Employee newEmployee = new Employee(employeeDTO);
-        iEmployeeInterface.addEmployee(newEmployee);
         ResponseDTO responseDTO = new ResponseDTO("Add record successfully", iEmployeeInterface.addEmployee(newEmployee));
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.CREATED);
     }
 
     @GetMapping("/search-by/{id}")
     public ResponseEntity<ResponseDTO> searchById(@PathVariable int id){
-
         ResponseDTO responseDTO = new ResponseDTO("Record found successfully", iEmployeeInterface.searchById(id));
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.CREATED);
     }
