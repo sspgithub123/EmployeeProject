@@ -4,6 +4,7 @@ import com.example.employeeproject.dto.EmployeeDTO;
 import com.example.employeeproject.exceptionHandling.EmployeeException;
 import com.example.employeeproject.module.Employee;
 import com.example.employeeproject.repository.EmployeeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class EmployeeServices implements IEmployeeInterface{
 
     @Autowired
@@ -23,11 +25,9 @@ public class EmployeeServices implements IEmployeeInterface{
     }
 
     public Employee searchById(int id) {
-        if (employeeRepository.findById(id).isPresent()){
-            Employee newEmployee = new Employee(id);
-            return newEmployee;
-        }
-        else throw (new EmployeeException("record not Found"));
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeException("Employee with EmployeeId " + id
+                        + " Doesn't Exists...!"));
     }
 
     public List<Employee> searchAll() {
@@ -41,6 +41,11 @@ public class EmployeeServices implements IEmployeeInterface{
             return "Done " + search;
         }
         else throw (new EmployeeException("Wrong input"));
+    }
+
+    @Override
+    public List<Employee> getEmployeeByDepartment(String department) {
+        return employeeRepository.findEmployeeByDepartment(department);
     }
 
     public String removeById(int id) {
